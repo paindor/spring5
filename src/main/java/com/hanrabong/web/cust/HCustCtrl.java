@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hanrabong.web.cmm.IConsumer;
+import com.hanrabong.web.cmm.IFunction;
 import com.hanrabong.web.utl.Printer;
 
 import lombok.extern.log4j.Log4j;
@@ -19,54 +21,67 @@ import lombok.extern.log4j.Log4j;
 public class HCustCtrl {
 	@Autowired Printer printer;
 	@Autowired HCust hcust;
+	@Autowired HCustMapper custMapper;
 	
 
 	@PostMapping("/")
-	public Map<?, ?> join(@RequestBody HCust param) {
+	public String join(@RequestBody HCust param) {
 		
-	//	logger.info("ajax 가 보낸아이디 와 비번 {}" , param.getCid() + ","+ param.getCpw());
+		//logger.info("ajax 가 보낸아이디 와 비번 {}");
 		HashMap<String, String> map = new HashMap<>();
-		printer.accept("람다 프린터가 출력한값"+param.getCid() );
+	/*	new IConsumer() {
+			
+			@Override
+			public void accept(Object o) {
+				custMapper.insertUser(param);
+				
+				
+			}
+		};*/
+
+		IConsumer<HCust> ic = o ->custMapper.insertUser(param);
+				
+		ic.accept(param);
 		
 		
-		map.put("cid",param.getCid() );
-		map.put("cpw",param.getCpw());
-		map.put("cnum", param.getCnum());
-		//custService.join(param);
 		
 		
-		//logger.info("map의 아이디 비번{}" , map.get("cid") + "," + map.get("cpw"));
-		
-		//int count = empService.countEmp();
-		
-		//model.addAttribute("count" , count);
-		
-		return map;
+		return "success";
 		
 		
 	}
 	@PostMapping("/login")
 	public HCust login(@RequestBody HCust param) {
 		
-		//logger.info("ajax 가 보낸아이디 와 비번 {}" , param.getCid() + ","+ param.getCpw());
-		//ashMap<String, String> map = new HashMap<>();
 		
-	//	cust.setCid(param.getCid());
-		//cust.setCpw(param.getCpw());
+		
+		/*IFunction<HCust, HCust> f = new IFunction() {
+			
+			
+			@Override
+			public Object apply(Object o) {
+				// TODO Auto-generated method stub
+				
+				return custMapper.selectCustById(param);
+				
+			}
+		};*/
+		
 		
 
+		IFunction<HCust, HCust> f =  o ->custMapper.selectCustById(param);
+		
+	
+		return f.apply(param);
 		
 		
-		//int count = empService.countEmp();
 		
-		//model.addAttribute("count" , count);
-		
-	//	logger.info("user의 사용자 정보{}" ,cust.toString());
-		return null;//custService.login(param);
-			
 		
 	}
+		 
+		
+		 
+		 
 	
-
 
 }
