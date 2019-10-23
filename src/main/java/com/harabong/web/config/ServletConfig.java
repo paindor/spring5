@@ -28,7 +28,7 @@ public class ServletConfig implements WebMvcConfigurer{
 	  @Override
 	  public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		  registry.addResourceHandler("/resources/**")
-		  .addResourceLocations("/resources/");
+		  .addResourceLocations("resources/");
 		  
 		  
 	    }
