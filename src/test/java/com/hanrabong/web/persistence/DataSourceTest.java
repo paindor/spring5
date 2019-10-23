@@ -17,7 +17,7 @@ import com.harabong.web.config.RootConfig;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RootConfig.class})
 @Log4j
 public class DataSourceTest {
@@ -32,7 +32,7 @@ public class DataSourceTest {
 			System.out.println("성공");
 			log.info(con);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			System.out.println("실패");
 			fail(e.getMessage());
 			
 		}

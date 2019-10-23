@@ -1,16 +1,18 @@
-package com.hanrabong.web.domains;
+package com.hanrabong.web.cust;
 
-import java.io.Serializable;
 
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
- @Component @Data
-public class HCustDTO implements Serializable{
+import lombok.NoArgsConstructor;
+@Data
+@Component
+@AllArgsConstructor
+@NoArgsConstructor
+public class HCust{
 	
 
-	private static final long serialVersionUID= 1L;
 
 	private String cnum, cid, cpw, cname, gen, birth, skinProb,
 		skinType, child, addr, tel, cpoint;

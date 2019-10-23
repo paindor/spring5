@@ -1,4 +1,4 @@
-package com.hanrabong.web.controller;
+package com.hanrabong.web.cmm;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class CmmCtrl {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CmmCtrl.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -33,7 +33,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "index";
 	}
 	
 }
