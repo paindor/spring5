@@ -18,16 +18,7 @@ auth =(() =>{
 			setContentView()
 			$('#a_go_join').click(e=>{
 				e.preventDefault()
-				join()
-			})
-		}).fail(()=>{alert(WHEN_ERR)})
-	}
-	let setContentView=()=>{
-		login();
-		
-	}
-	let join=()=>{
-		   $('head')
+				$('head')
 		      .html(auth_vue.join_head())
 		   $('body')
 		      .html(auth_vue.join_body())
@@ -35,29 +26,54 @@ auth =(() =>{
 				text: 'continue',
 				href: '#' ,
 				click : e=>{
-					e.preventDefault();
+					alert('시발')
 					let data = {cid : $('#cid').val() , cpw : $('#cpw').val(),
-							 cnum :$('#cnum').val()};
+				 cnum :$('#cnum').val()}
+					e.preventDefault();
+					existId()
+					join();
+					
+					
+					
+					
+					
+				}
+			})
+			.addClass('btn btn-primary btn-lg btn-block')
+			.appendTo('#button')
+			})
+		}).fail(()=>{alert(WHEN_ERR)})
+		
+	}
+	let setContentView=()=>{
+		login();
+		
+	}
+	let join=()=>{
+		
+		
+		let data = {cid : $('#cid').val() , cpw : $('#cpw').val(),
+				 cnum :$('#cnum').val()}
+					
 					alert('id?')
 					$.ajax({
-						url : _+'/hcust/join',
+						url : _+'/hcust/',
 						type : 'POST',
 						dataType : 'json',
 						data : JSON.stringify(data),
 						contentType : 'application/json',
 						success : d => {
-							alert('ajax성공' + d.cid + d.cpw);
-							login()
+							alert('ajax성공' );
+								login()
 						},
 						error : e => {
 							alert('ajax실패' );
 							
 						}
-					})
-				}
+					
+				
 		      })
-			.addClass('btn btn-primary btn-lg btn-block')
-			.appendTo('#button')
+			
 			
 						
 		
@@ -77,7 +93,7 @@ auth =(() =>{
 				let idpw = {cid:$('#cid').val() , cpw:$('#cpw').val()};
 				alert('성공');
 				$.ajax({
-					url : _+'/hcust/login',
+					url : _+'/hcust/:cid/',
 					type:'POST',
 					dataType:'json',
 					data: JSON.stringify(idpw),
@@ -85,7 +101,7 @@ auth =(() =>{
 					success : d =>{
 						alert(d.cname+'님 환영합니다')
 						
-						mypage(d)
+						board()
 						
 					},
 					error : e =>{
@@ -108,13 +124,42 @@ auth =(() =>{
 		alert(x.cid);
 		$('head').html(auth_vue.mypage_head(x))
 		$('body').html(auth_vue.mypage_body(x))
-		
-		
-		
+	
 		
 	}
+	let board=()=>{
+		alert('게시판')
+		$('head').html(brd_vue.brd_head())
+		$('body').html(brd_vue.brd_body())
 		
-		return {onCreate ,join, login ,mypage};
+	}
+	let existId=()=>{
+		//alert('2222222')
+		//alert($('#cid').val())
+		$.ajax({
+			url : _+'/hcust/'+$('#cid').val()+'/exist',
+			type:'GET',
+			contentType:'application/json',
+			success : d =>{
+				alert(d.msg)
+				if(d.msg==='success'){
+					return true
+					}
+				else
+					return false
+				
+				
+			},
+			error : e =>{
+				alert('ajax실패')
+				
+				
+			}
+			
+		})
+	}
+		
+		return {onCreate ,join, login ,mypage };
 	
 	
 })();

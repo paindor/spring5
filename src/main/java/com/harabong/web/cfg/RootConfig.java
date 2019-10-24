@@ -26,7 +26,7 @@ public class RootConfig {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
 	    dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    dataSource.setUrl("jdbc:mysql://localhost:3306/hanrabong");
+	    dataSource.setUrl("jdbc:mysql://localhost:3306/hanrabong?serverTimezone=UTC");
 	    dataSource.setUsername("hanrabong");
 	    dataSource.setPassword("hanrabong");
 

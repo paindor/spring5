@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hanrabong.web.cmm.IConsumer;
 import com.hanrabong.web.cmm.IFunction;
+import com.hanrabong.web.cmm.IPredicate;
 import com.hanrabong.web.utl.Printer;
 
 import lombok.extern.log4j.Log4j;
@@ -26,45 +27,61 @@ public class HCustCtrl {
 	@Autowired Printer printer;
 	@Autowired HCust hcust;
 	@Autowired HCustMapper hcustMapper;
+	@Autowired Map<String, Object> map;
+	
+	@GetMapping("/{cid}/exist")
+	public Map<?,?> exsistId(@PathVariable String cid){
+		printer.accept("in the exist ");
+		IFunction<String, Integer>p = o-> hcustMapper.existId(cid);
+		
+		map.put("msg",  (p.apply(cid)== 0)? "success" : "fail");
+		printer.accept("exist " + cid);
+		return map;
+		
+	}
+	
 	
 
 	@PostMapping("/")
-	public String join(@RequestBody HCust param) {
+	public Map<?, ?> join(@RequestBody HCust param) {
 		
+		printer.accept("in the join");
 
+		printer.accept("param  " + param.getCid());
 
-	IConsumer<HCust> ic = o ->hcustMapper.insertUser(param);
-				
+		IConsumer<HCust> ic = o -> hcustMapper.insertUser(param);
+
+		map.clear();
+		map.put("msg", "success");
 		ic.accept(param);
-		
-		
-		
-		
-		return "success";
-		
-		
+		printer.accept("param  " + param.getCid());
+
+		return map;
+
 	}
-	@PostMapping("/{uid}")
-	public HCust login(@PathVariable String uid, @RequestBody HCust param) {
+	@PostMapping("/{cid}")
+	public HCust login(@PathVariable String cid, @RequestBody HCust param) {
 
 
 
+		printer.accept("in the login");
+		
 		IFunction<HCust, HCust> f =  o ->hcustMapper.selectCustById(param);
 		
-	
+		printer.accept("login " +param.getCid());
 		return f.apply(param);
 		
 		
 		
 		
 	}
-	@GetMapping("/{uid}")
+	@GetMapping("/{cid}")
 	public HCust searchUser(@PathVariable String uid,@RequestBody HCust param) {
 		IFunction<HCust, HCust> f = t->hcustMapper.selectCustById(param);
 		return f.apply(param);
 		
 	}
-	@PutMapping("/{uid}")
+	@PutMapping("/{cid}")
 	public String updateUser(@PathVariable String uid,@RequestBody HCust param) {
 		return null;
 		
@@ -74,6 +91,8 @@ public class HCustCtrl {
 		return null;
 		
 	}
+	
+	
 	
 	
 		 
