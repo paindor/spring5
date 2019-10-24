@@ -1,4 +1,4 @@
-package com.harabong.web.config;
+package com.harabong.web.cfg;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;

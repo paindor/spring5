@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.harabong.web.config.RootConfig;
+import com.harabong.web.cfg.RootConfig;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

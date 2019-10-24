@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hanrabong.web.cust.HCustMapper">
+
+	<select id="selectCustById" resultType="cust">
+		SELECT CNUM, CID , CPW FROM HCUST WHERE CID LIKE #{cid} 
+			AND CPW LIKE #{cpw}
+		
+	</select>
+	<insert id="insertUser" >
+	   INSERT INTO HCUST(CNUM , CID, CPW)
+		VALUES( #{cnum} ,#{cid}, #{cpw})
+						
+	</insert>
+
+	
+
+</mapper>
