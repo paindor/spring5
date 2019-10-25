@@ -69,7 +69,9 @@ public class HCustCtrl {
 		IFunction<HCust, HCust> f =  o ->hcustMapper.selectCustById(param);
 		
 		printer.accept("login " +param.getCid());
-		return f.apply(param);
+		hcust = f.apply(param);
+		printer.accept(hcust.getCid());
+		return hcust;
 		
 		
 		

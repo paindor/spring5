@@ -6,7 +6,7 @@
 <mapper namespace="com.hanrabong.web.cust.HCustMapper">
 
 	<select id="selectCustById" resultType="cust" >
-		SELECT CNUM, CID , CPW FROM HCUST WHERE CID LIKE #{cid} 
+		SELECT CNUM, CID , CPW , CNAME FROM HCUST WHERE CID LIKE #{cid} 
 			AND CPW LIKE #{cpw}
 		
 	</select>

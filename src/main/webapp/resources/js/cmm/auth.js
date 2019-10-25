@@ -3,18 +3,29 @@ var auth = auth || {};
 
 auth =(() =>{
 	const WHEN_ERR = 'js파일없음'
-	let _,js, auth_vue_js;
+	let _,js, auth_vue_js , brd_js, auth_info;
 	
 	let init =()=>{
 		_= $.ctx();
 		js = $.js();
+		brd_js = js+'/brd/brd.js'
 		auth_vue_js=js+'/vue/auth_vue.js';
+		auth_info = js+'/cmm/router.js'
+		
+		
 		
 	};
 	let onCreate =()=>{
 		
 		init();
-		$.getScript(auth_vue_js).done(()=>{
+		$.when(
+				$.getScript(auth_vue_js),
+				//$.getScript(authjs),
+				$.getScript(auth_info )
+					
+				
+				)
+		.done(()=>{
 			setContentView()
 			$('#a_go_join').click(e=>{
 				e.preventDefault()
@@ -22,6 +33,7 @@ auth =(() =>{
 		      .html(auth_vue.join_head())
 		   $('body')
 		      .html(auth_vue.join_body())
+		     
 		      $('<button>' , {
 				text: 'continue',
 				href: '#' ,
@@ -63,6 +75,7 @@ auth =(() =>{
 						data : JSON.stringify(data),
 						contentType : 'application/json',
 						success : d => {
+							
 							alert('ajax성공' );
 								login()
 						},
@@ -99,9 +112,20 @@ auth =(() =>{
 					data: JSON.stringify(idpw),
 					contentType:'application/json',
 					success : d =>{
-						alert(d.cname+'님 환영합니다')
 						
-						board()
+						$.extend (new LogUser(d));
+						alert($.cname())
+						$.getScript(brd_js, ()=>{
+							brd.onCreate()
+							
+						})
+						//$.sessionStorage(d)
+						
+						
+						
+						
+						
+					
 						
 					},
 					error : e =>{

@@ -122,8 +122,8 @@ auth_vue ={
         '          </div>'+
         '        </div>'+
         '        <div class="mb-3">'+
-        '          <label for="email">Email <span class="text-muted">(Optional)</span></label>'+
-        '          <input type="email" class="form-control" id="email" placeholder="you@example.com">'+
+        '          <label for="email">중복체크 <span class="text-muted">(Optional)</span></label>'+
+        '          <input type="text" class="form-control" id="dupl_check" placeholder="you@example.com">'+
         '          <div class="invalid-feedback">'+
         '            Please enter a valid email address for shipping updates.'+
         '          </div>'+
@@ -288,8 +288,8 @@ auth_vue ={
 		'    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>'+
 		'    <label for="inputEmail" class="sr-only">Email address</label>'+
 		'    <input type="text" id="cid" class="form-control" placeholder="Email address" required="" autofocus="">'+
-		'    <label for="inputPassword" class="sr-only">Password</label>'+
-		'    <input type="password" id="cpw" class="form-control" placeholder="Password" required="">'+
+		'    <label for="inputPassword" class="sr-only">중복체크</label>'+
+		'    <input type="text" id="cpw" class="form-control" placeholder="Password" required="">'+
 		'    <div class="checkbox mb-3">'+
 		'      <label>'+
 		'       <a id="a_go_join" href="#">go join</a>'+
