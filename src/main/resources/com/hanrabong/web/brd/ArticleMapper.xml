@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hanrabong.web.brd.ArticleMapper">
+
+	<insert id="insertArticle" parameterType="Article">
+	INSERT INTO ARTICLE( cid, title, content)
+	VALUES( #{cid}, #{title}, #{content})
+	
+	 </insert>
+	
+
+</mapper>
