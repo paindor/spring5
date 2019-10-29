@@ -1,5 +1,6 @@
 package com.hanrabong.web.brd;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hanrabong.web.cmm.IConsumer;
+import com.hanrabong.web.cmm.IFunction;
+import com.hanrabong.web.cmm.ISupply;
 import com.hanrabong.web.utl.Printer;
 
 @RestController
@@ -27,6 +30,8 @@ public class ArticleCtrl {
 	@Autowired Map<String, Object>map;
 	@Autowired Article article;
 	@Autowired ArticleMapper articleMapper;
+	@Autowired List<Article>list;
+	
 	
 	
 
@@ -41,28 +46,74 @@ public class ArticleCtrl {
 		
 		map.clear();
 		map.put("msg", "success");
+		ISupply<String> s =()-> articleMapper.selectCount();
+		
+		map.put("count", s.get());
 		
 		
 		return map;
 		
 	}
+	@GetMapping("/count")
+	public Map<?, ?> countArticle() {
+		printer.accept("count진입");
+		
+		ISupply<String> s =()-> articleMapper.selectCount();
+		
+		
+		map.clear();
+		map.put("count", s.get());
+		 
+			
+		
+		return map;
+		
+	}
 	@GetMapping("/{brdNum}")
-	public Article updateArticle(@PathVariable String brdnum ,
+	public Article searchArticle(@PathVariable String brdNum ,
 			@RequestBody Article param) {
 		return null;
 	}
+	@GetMapping("/")
+	public List<Article> list(){
+		
+		
+		list.clear();
+		ISupply<List<Article>> s =()-> articleMapper.selectAll();
+		printer.accept("목록\n" + s.get());
+		
+		return s.get();
+		
+	}
 	
 	@PutMapping("/{brdNum}")
-	public String deleteArticle(@PathVariable String brdnum, 
+	public Map<?, ?> updateArticle(@PathVariable String brdNum, 
 			@RequestBody Article param) {
-		return null;
+		printer.accept("in the update");
+		IConsumer<Article>c=s-> articleMapper.updateAtricle(param);
+		c.accept(param);
+		printer.accept(param.getBrdNum());
+		printer.accept(param.getContent());
+		map.clear();
+		map.put("msg", "success");	
+		return map;
 		
 		
 	}
 	@DeleteMapping("/{brdNum}")
-	public String searchArticle(@PathVariable String brdnum, 
+	public Map<?, ?> deleteArticle(@PathVariable String brdNum, 
 			@RequestBody Article param) {
-		return null;
+		printer.accept("in the delete");
+
+		IConsumer<Article> c = s-> articleMapper.deleteArticle(param);
+		
+		c.accept(param);
+		
+		map.clear();
+		map.put("msg","success" );
+		
+		return map;
+		
 		
 	}
 	

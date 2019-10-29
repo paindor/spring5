@@ -10,6 +10,25 @@
 	VALUES( #{cid}, #{title}, #{content})
 	
 	 </insert>
+	 
+	 <select id="selectCount" resultType="string">
+	 SELECT COUNT(*) FROM ARTICLE
+	 
+	 </select>
+	
+	<select id="selectAll" resultType="Article">
+	SELECT a.* FROM ARTICLE a;
+	
+	</select>
+	
+	<delete id="deleteArticle" parameterType="Article" >
+	DELETE FROM ARTICLE WHERE BRDNUM LIKE #{brdNum}
+	</delete>
+	
+	<update id="updateAtricle" parameterType="Article">
+	UPDATE ARTICLE SET TITLE = #{title} , CONTENT = #{content}
+	WHERE brdNum LIKE #{brdNum}
+	</update>
 	
 
 </mapper>
