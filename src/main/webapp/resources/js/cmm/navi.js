@@ -1,14 +1,20 @@
 "user strict"
 var navi = navi || {}
 navi = (()=>{
-	let _,js, auth_vue_js , img, css, brd_js, auth_js, js_navi_vue
+	let _,js, auth_vue_js , img, css, brd_js, auth_js, js_navi_vue, app_js
 	let init=x=>{
 		
+		_= $.ctx()
+		js = $.js()
+		img = $.img()
+		css= $.css()
 		
+		app_js = js+'app.js'
 		brd_js = js+'/brd/brd.js'
 		auth_vue_js=js+'/vue/auth_vue.js'
 		auth_js= js+'/cmm/auth.js'
 		
+		$id = document.cookie
 		
 		js_navi_vue = js+'/vue/navi_vue.js'
 	
@@ -23,8 +29,8 @@ navi = (()=>{
 				
 		).done(()=>{
 			setContentView()
-				$.getScript(js_navi_vue)
-		navi_vue.nav()
+				
+		
 		}).fail(()=>{
 			
 		})
@@ -47,9 +53,7 @@ navi = (()=>{
 		.appendTo('#go_write')
 		.click (e=>{
 				e.preventDefault()
-				$.getScript(brd_js, ()=>{
-					brd.write({_:_ ,img:img , css:css , js:js})
-				})
+				brd.write()
 				
 				
 			})

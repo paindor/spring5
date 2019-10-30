@@ -292,7 +292,10 @@ auth_vue ={
 		'    <input type="text" id="cpw" class="form-control" placeholder="Password" required="">'+
 		'    <div class="checkbox mb-3">'+
 		'      <label>'+
-		'       <a id="a_go_join" href="#">go join</a>'+
+		'       <a id="a_go_join" href="#">회원가입</a>'+
+		'      </label>'+
+		'      <label>'+
+		'       <a id="a_go_admin" href="#">관리자모드</a>'+
 		'      </label>'+
 		'    </div>'+
 		'   <div id="btn_login"> </div> '+

@@ -41,29 +41,7 @@ auth =(() =>{
 		      .html(auth_vue.join_head())
 		   $('body')
 		      .html(auth_vue.join_body())
-		   $('#cid').keyup(()=>{
-			   if($('#cid').val().length > 2){
-				   $.ajax({
-					   url : _+'/hcust'+$('#cid').val()+ '/exist',
-					   contentType: 'application/json',
-					   success: d=>{
-						   alert('성공')
-						   if(d.msg ==='success')
-							   $('#dupl_check')
-							   .val('사용가능')
-							   .css('color' , 'blue')
-						   else
-							   $('#dupl_check')
-							   .val('사용중')
-							   .css('color' , 'red')
-							   
-					   },
-					   error :e =>{
-						   alert('실패')
-					   }
-				   })
-			   }
-		   });
+		   existId()
 		      $('<button>' , {
 				text: 'continue',
 				href: '#' ,
@@ -88,8 +66,10 @@ auth =(() =>{
 	let setContentView=()=>{
 		$('head').html(auth_vue.login_head({css:$.css(), img:$.img()}))
 		$('body').addClass('text-center')
-		.html(auth_vue.join_body({css:$.css(), img:$.img()}))
+		.html(auth_vue.login_body({css:$.css(), img:$.img()}))
 		login()
+		access()
+		
 		
 		
 	}
@@ -112,7 +92,7 @@ auth =(() =>{
 							if(d.msg === 'success'){
 								$('head').html(auth_vue.join_head({css:$.css(), img:$.img()}))
 							$('body').addClass('text-center')
-							.html
+							.html(auth_vue.join_body({css:$.css(), img:$.img()}))
 							}
 								login()
 						},
@@ -129,30 +109,29 @@ auth =(() =>{
 		
 	}
 	let login =()=>{
-		let x = {css:$.css(), img:$.img()}
-		$('head')
-		.html(auth_vue.login_head(x));
-		$('body')
-		.html(auth_vue.login_body(x));
+		
 		$('<button>', {
 			//type :"submit",
 			text : "sign in",
 	
 			click : e =>{
 				e.preventDefault();
-				let idpw = {cid:$('#cid').val() , cpw:$('#cpw').val()};
-				alert('성공');
+				
 				$.ajax({
 					url : _+'/hcust/:cid/',
 					type:'POST',
 					dataType:'json',
-					data: JSON.stringify(idpw),
+					data: JSON.stringify({
+						cid: $('#cid').val(),
+						cpw: $('#cpw').val()
+					}),
 					contentType:'application/json',
 					success : d =>{
 						
 						//$.extend (new LogUser(d));
 						setCookie("USERID", d.cid)
-						alert('-->' + _)
+						
+						alert('-->' + getCookie("USERID"))
 						brd.onCreate()
 							
 						
@@ -197,27 +176,70 @@ auth =(() =>{
 	let existId=()=>{
 		//alert('2222222')
 		//alert($('#cid').val())
-		$.ajax({
-			url : _+'/hcust/'+$('#cid').val()+'/exist',
-			type:'GET',
-			contentType:'application/json',
-			success : d =>{
-				alert(d.msg)
-				if(d.msg==='success'){
-					return true
+		$('#cid').keyup(()=>{
+			if($('#cid').val().length >2){
+				$.ajax({
+					url : _+'/hcust/'+$('#cid').val()+'/exist',
+					
+					contentType:'application/json',
+					success : d =>{
+						alert(d.msg)
+						if(d.msg==='success')
+							$('#dupl_check')
+							.val('사용가능')
+							.css('color' , 'blue')
+						else
+							$('#dupl_check')
+							.val('사용중')
+							.css('color' , 'red')
+						
+						
+					},
+					error : e =>{
+						alert('ajax실패')
+						
+						
 					}
-				else
-					return false
-				
-				
-			},
-			error : e =>{
-				alert('ajax실패')
-				
-				
-			}
-			
+					
+				})
+		}
 		})
+	
+	}
+	
+	let access=()=>{
+		$('#a_go_admin').click(e=>{
+			e.preventDefault()
+			let ok = confirm('관리자?')
+			if(ok){
+				let aid = prompt('사원번호?')
+				alert('사번:' + aid)
+				alert(_+'/admin/'+aid)
+				$.ajax({
+					url:_+'/admin/'+aid,
+					type:'POST',
+					data: 'json',
+					dataType:JSON.stringify({aid : aid, apw: prompt('비밀번호')}),
+					contentType:'application/json',
+					success: d=>{
+						if(d.msg==='success'){
+							alert('환영합니다')
+							admin.onCreate()
+						}
+						else{
+							alert('접근불가')
+							app.run(_)
+							
+						}
+						
+					},
+					error : e =>{
+						
+					}
+				})
+			}
+		})
+		
 	}
 		
 		return {onCreate ,join, login ,mypage };

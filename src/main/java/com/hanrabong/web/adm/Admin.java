@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Admin{
 	
-	private String anum, aid, apw, aname, authority, part;
+	private String anum, aid, apw, aname;
 	
 	
 }
