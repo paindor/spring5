@@ -3,14 +3,20 @@ var auth = auth || {};
 
 auth =(() =>{
 	const WHEN_ERR = 'js파일없음'
-	let _,js, auth_vue_js , brd_js, auth_info;
+	let _,js, img, css, auth_vue_js , brd_js, auth_info ,cookie_js;
 	
 	let init =()=>{
 		_= $.ctx();
 		js = $.js();
+		css = $.css()
+		img = $.img()
+		
 		brd_js = js+'/brd/brd.js'
 		auth_vue_js=js+'/vue/auth_vue.js';
 		auth_info = js+'/cmm/router.js'
+		
+		cookie_js = js+'/cmm/cookie.js'
+		
 		
 		
 		
@@ -21,7 +27,9 @@ auth =(() =>{
 		$.when(
 				$.getScript(auth_vue_js),
 				//$.getScript(authjs),
-				$.getScript(auth_info )
+				$.getScript(auth_info ),
+				$.getScript(cookie_js),
+				$.getScript(brd_js)
 					
 				
 				)
@@ -33,16 +41,36 @@ auth =(() =>{
 		      .html(auth_vue.join_head())
 		   $('body')
 		      .html(auth_vue.join_body())
-		     
+		   $('#cid').keyup(()=>{
+			   if($('#cid').val().length > 2){
+				   $.ajax({
+					   url : _+'/hcust'+$('#cid').val()+ '/exist',
+					   contentType: 'application/json',
+					   success: d=>{
+						   alert('성공')
+						   if(d.msg ==='success')
+							   $('#dupl_check')
+							   .val('사용가능')
+							   .css('color' , 'blue')
+						   else
+							   $('#dupl_check')
+							   .val('사용중')
+							   .css('color' , 'red')
+							   
+					   },
+					   error :e =>{
+						   alert('실패')
+					   }
+				   })
+			   }
+		   });
 		      $('<button>' , {
 				text: 'continue',
 				href: '#' ,
 				click : e=>{
-					alert('시발')
-					let data = {cid : $('#cid').val() , cpw : $('#cpw').val(),
-				 cnum :$('#cnum').val()}
+					
 					e.preventDefault();
-					existId()
+					
 					join();
 					
 					
@@ -58,7 +86,11 @@ auth =(() =>{
 		
 	}
 	let setContentView=()=>{
-		login();
+		$('head').html(auth_vue.login_head({css:$.css(), img:$.img()}))
+		$('body').addClass('text-center')
+		.html(auth_vue.join_body({css:$.css(), img:$.img()}))
+		login()
+		
 		
 	}
 	let join=()=>{
@@ -77,6 +109,11 @@ auth =(() =>{
 						success : d => {
 							
 							alert('ajax성공' );
+							if(d.msg === 'success'){
+								$('head').html(auth_vue.join_head({css:$.css(), img:$.img()}))
+							$('body').addClass('text-center')
+							.html
+							}
 								login()
 						},
 						error : e => {
@@ -113,12 +150,12 @@ auth =(() =>{
 					contentType:'application/json',
 					success : d =>{
 						
-						$.extend (new LogUser(d));
-						alert($.cname())
-						$.getScript(brd_js, ()=>{
-							brd.onCreate()
+						//$.extend (new LogUser(d));
+						setCookie("USERID", d.cid)
+						alert('-->' + _)
+						brd.onCreate()
 							
-						})
+						
 						//$.sessionStorage(d)
 						
 						

@@ -18,21 +18,6 @@ function Session(x,user) {
 	}
 	
 }
-function LogUser(x){
-	sessionStorage.setItem('cid', x.cid);
-	sessionStorage.setItem('cpw', x.cpw);
-	sessionStorage.setItem('cname', x.cname);
-	sessionStorage.setItem('cnum' , x.cnum);
+
 	
 	
-	return{
-		cid : ()=>{return sessionStorage.getItem('cid');},
-		cpw : ()=>{return sessionStorage.getItem('cpw');},
-		cname : ()=>{return sessionStorage.getItem('cname');},
-		cnum : ()=>{return sessionStorage.getItem('cnum');}
-	}
-	
-	
-	
-	
-}

@@ -18,6 +18,8 @@ app = (()=>{
 	let init =()=>{
 			_=$.ctx();
 			js = $.js() ;
+			css = $.css();
+			img = $.img();
 			authjs = js+'/cmm/auth.js';
 		}
 	let onCreate=()=>{

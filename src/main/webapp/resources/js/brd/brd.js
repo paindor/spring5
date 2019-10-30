@@ -2,34 +2,52 @@
 var brd = brd || {};
 
 brd = (()=>{
-	let _, js,brd_vue_js , log_user ,$form
+	let _, js,css, img,brd_vue_js , navi_js , brd_js,
+		navi_vue_js ,$form
 	
-	let init = ()=>{
-		_= $.ctx()
-		js=$.js()
+	let init =()=>{
+		_ = $.ctx()
+		js = $.js()
+		css = $.css()
+		img = $.img()
+		brd_js = js+'/brd/brd.js'
 		
 		brd_vue_js = js+'/vue/brd_vue.js'
 		
-		log_user = $.cname()
-		$form = 'form'
 		
 		
+		navi_js = js+ '/cmm/navi.js'
+		navi_vue_js = js+'/vue/navi_vue.js'
+		alert('111' +_)
 	}
 	let onCreate =()=>{
+		
 		init()
-		$.getScript(brd_vue_js, ()=>{
-		setContentView()
-		navigation()
+		$.when(
+				$.getScript(brd_vue_js),
+				$.getScript(navi_js),
+				
+				$.getScript(navi_vue_js)
+				
+				
+		).done(
+				setContentView(),
+				navi.onCreate()
+		).fail()
 		
 		
-		})
+		
+		
+		
 		
 	}
 	let setContentView=()=>{
 		
+			alert('22' +_)
 			$('head').html(brd_vue.brd_head({css:$.css() , img: $.img()}))
 			$('body').addClass('text-center')
 			.html(brd_vue.brd_body({ctx:'/web', css:$.css(), img:$.img()}))
+			$(navi_vue.nav()).appendTo('#navi')
 			recent_updates()
 			
 		
@@ -40,6 +58,7 @@ brd = (()=>{
 		
 	}
 	let recent_updates=()=>{
+
 		$('#recent_updates .media').remove()
 		$('#recent_updates .d-block').remove()
 		$('#suggestions').remove()
@@ -62,7 +81,7 @@ brd = (()=>{
 			$('<strong class="d-block text-gray-dark">@<a>'+j.cid+'</a></strong>')
 			.appendTo("#id_"+i)
 			.click(()=>{
-				alert('작성자클릭')
+				alert('작성자 클릭')
 				
 			})
 			
@@ -80,13 +99,14 @@ brd = (()=>{
 	}
 				
 	let write=()=>{
+		
 	//	let x = {cname: $.userInf().cname}
 		alert('글작성이동' + log_user)
 		
 		$('#recent_updates').html(brd_vue.brd_write())
 		
 		
-		$('#form_write input[name=writer]').val(log_user)
+		$('#form_write input[name=writer]').val(getCookie("USERID"))
 		$('#suggestion').remove()
  	
 		$('<input>' ,{
@@ -105,9 +125,9 @@ brd = (()=>{
 					content :$('#form_write textarea[name="content"]').val()
 					
 			}
-			alert('id:' + json.title)
+			alert('id:' + _)
 			$.ajax({
-					url:_+'/articles/',
+					url: x._+'/articles/',
 					type: 'POST',
 					data: JSON.stringify(json),
 					dataType: 'json',
@@ -143,21 +163,7 @@ brd = (()=>{
 		.addClass("btn btn-danger")
 		.appendTo('#boardwrite')
 	
-		
-	let navigation =()=>{
-		$('<a>' , {
-			href:'#',
-			click : e=>{
-				e.preventDefault()
-				write()
-				
-			},
-			text: '글작성'
-				
-		} )
-		.addClass('nav-link')//) class="nav-link" href="#">글 작성</a>'')
-		.appendTo('#go_write')
-	}
+
 	let detail =x=>{
 	$('#recent_updates').html(brd_vue.brd_write())
 	$('#recent_updates div.container-fluid h1').html('ARTICLE DETAIL')
@@ -243,7 +249,7 @@ brd = (()=>{
 		
 	}
 
-	return {onCreate}
-		
+	return {onCreate, write}
+
 		
 })()
