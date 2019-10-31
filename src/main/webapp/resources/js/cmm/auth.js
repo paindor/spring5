@@ -3,20 +3,22 @@ var auth = auth || {};
 
 auth =(() =>{
 	const WHEN_ERR = 'js파일없음'
-	let _,js, img, css, auth_vue_js , brd_js, auth_info ,cookie_js;
+	let _,js, img, css, auth_vue_js , brd_js, auth_info ,cookie_js,
+		admin_js , brd_vue_js
 	
 	let init =()=>{
 		_= $.ctx();
 		js = $.js();
 		css = $.css()
 		img = $.img()
+		admin_js = js+'/adm/admin.js'
 		
 		brd_js = js+'/brd/brd.js'
 		auth_vue_js=js+'/vue/auth_vue.js';
 		auth_info = js+'/cmm/router.js'
 		
 		cookie_js = js+'/cmm/cookie.js'
-		
+		brd_vue_js= js+'/vue/brd_vue.js'
 		
 		
 		
@@ -29,8 +31,8 @@ auth =(() =>{
 				//$.getScript(authjs),
 				$.getScript(auth_info ),
 				$.getScript(cookie_js),
-				$.getScript(brd_js)
-					
+				$.getScript(brd_js),
+				$.getScript(admin_js)
 				
 				)
 		.done(()=>{
@@ -65,6 +67,7 @@ auth =(() =>{
 	}
 	let setContentView=()=>{
 		$('head').html(auth_vue.login_head({css:$.css(), img:$.img()}))
+		brd_vue.brd_head()
 		$('body').addClass('text-center')
 		.html(auth_vue.login_body({css:$.css(), img:$.img()}))
 		login()
@@ -212,7 +215,8 @@ auth =(() =>{
 			e.preventDefault()
 			let ok = confirm('관리자?')
 			if(ok){
-				let aid = prompt('사원번호?')
+				admin.onCreate()
+				/*let aid = prompt('사원번호?')
 				alert('사번:' + aid)
 				alert(_+'/admin/'+aid)
 				$.ajax({
@@ -236,7 +240,7 @@ auth =(() =>{
 					error : e =>{
 						
 					}
-				})
+				})*/
 			}
 		})
 		

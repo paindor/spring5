@@ -43,6 +43,7 @@ navi = (()=>{
 	}
 	let setContentView=()=>{
 		
+		
 		$('<a>' , {
 			href:'#',
 			

@@ -248,7 +248,12 @@ auth_vue ={
 	login_head: (x)=> {
 		return '<head>'+
 		
-		
+		   '    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">'+
+			'    <title>Offcanvas template for Bootstrap</title>'+
+			'    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/offcanvas/">'+
+			'    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">'+
+			'    <link href="https://getbootstrap.com/docs/4.0/examples/offcanvas/offcanvas.css" rel="stylesheet">'+
+			'    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">'+
 		''+ ' <meta charset="UTF-8" />'+
 		'  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">'+
 		'  <title>Document</title>'+
