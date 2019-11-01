@@ -81,8 +81,38 @@ admin =(()=>{
 		
 	}
 	let webCrawl=()=>{
-		
 		$('#right').empty()
+		$('</br></br></br></br></br><h2>Web Crawling</h2></br></br></br></br></br></br></br>'+
+				'<form id="crawl_form" class="form-inline my-2 my-lg-0">'+
+				'  <select name="site" size="1">'+
+				'  </select>'+
+		          '<input class="form-control mr-sm-2" type="text" placeholder="insert URL for crawling" aria-label="Search">'+
+				'</form>')
+		.appendTo('#right')
+		$('#crawl_form input[class="form-control mr-sm-2"]')
+		.css({width:'80%'})
+		$.each([{sub:'naver.com'},{sub:'daum.net'},{sub:'google.co.kr'},{sub:'youtube.com'}],(i,j)=>{
+			$('<option value='+j.sub+'>'+j.sub+'</option>')
+			.appendTo('#crawl_form select')
+		})
+		$('<button class="btn btn-secondary my-2 my-sm-0" type="submit">go crawl</button>')
+		.appendTo('#crawl_form')
+		.click(e=>{
+			e.preventDefault()
+			let arr = [$('#crawl_form select[name="site"]').val(),
+						$('#crawl_form input[type="text"]').val()]
+			if(!$.fn.nullChecker(arr)){
+				$.getJSON(_+'/tx/crawling/'+arr[0]+'/'+arr[1],d=>{
+					alert(d.msg)
+				})
+			}
+		})
+		
+	
+		
+			
+		
+		/*$('#right').empty()
 		$('<h2>web crawling</h2>').appendTo('#right')
 		$('<form id="cr_form"><select></select></form>')
 		.appendTo('#right')
@@ -95,11 +125,11 @@ admin =(()=>{
 		}) 
 		$('<br></br><input type="text"></input> ')
 		.appendTo('#cr_form')
-		$('<input type="submit"></input>')
+		$('<input type="submit" value="GO"></input>')
 		.appendTo('#cr_form')
 		.click(()=>{
 			alert('고객관리')
-		})
+		})*/
 			
 			
 		

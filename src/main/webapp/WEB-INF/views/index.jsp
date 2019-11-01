@@ -16,7 +16,7 @@
 	<script src="<%=application.getContextPath() %>/resources/js/cmm/navi.js"></script>
 	<script src="<%=application.getContextPath() %>/resources/js/vue/navi_vue.js"></script>
 	<script src="<%=application.getContextPath() %>/resources/js/adm/admin.js"></script>
-		
+	<script src="<%=application.getContextPath() %>/resources/js/cmm/proxy.js"></script>
 	
 	
 	
