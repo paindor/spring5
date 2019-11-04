@@ -36,6 +36,7 @@ public class AdminCtrl {
 		return map;
 		
 	}
+	
 	@PostMapping("/{aid}")
 	public Map<?, ?> access(@PathVariable String aid ,@RequestBody Admin param){
 		printer.accept("access 진입");
@@ -51,7 +52,7 @@ public class AdminCtrl {
 	@GetMapping("/{aid}")
 	public String searchAdmin(@PathVariable String aid ,@RequestBody Admin param) {
 		//
-		return null;
+		return "";
 		
 	}
 	@PutMapping("/{aid}")
