@@ -33,7 +33,7 @@ brd_vue = {
 		'        <a class="nav-link" href="#">Link</a>'+
 		'      </nav>'+
 		'    </div>' +
-		'    <main role="main" class="container">'+
+		'    <main id ="main" role="main" class="container">'+
 		'      <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">'+
 		'        <img class="mr-3" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">'+
 		'        <div class="lh-100">'+
@@ -41,7 +41,7 @@ brd_vue = {
 		'          <small>2019-10-25</small>'+
 		'        </div>'+
 		'      </div>'+
-
+			
 		'      <div id="recent_updates" class="my-3 p-3 bg-white rounded box-shadow">'+
 		'        <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>'+
 		'        <div class="media text-muted pt-3">'+

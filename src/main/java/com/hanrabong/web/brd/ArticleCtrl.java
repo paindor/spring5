@@ -1,5 +1,7 @@
 package com.hanrabong.web.brd;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +56,7 @@ public class ArticleCtrl {
 		return map;
 		
 	}
+	
 	@GetMapping("/count")
 	public Map<?, ?> countArticle() {
 		printer.accept("count진입");
@@ -69,20 +72,20 @@ public class ArticleCtrl {
 		return map;
 		
 	}
-	@GetMapping("/{brdNum}")
-	public Article searchArticle(@PathVariable String brdNum ,
-			@RequestBody Article param) {
-		return null;
-	}
-	@GetMapping("/")
-	public List<Article> list(){
+	
+	
+	
+	@GetMapping("/page/{pageNo}")
+	public Map<?,?> list(@PathVariable String pageNo){
 		
 		
-		list.clear();
 		ISupply<List<Article>> s =()-> articleMapper.selectAll();
 		printer.accept("목록\n" + s.get());
+		map.clear();
+		map.put("article", s.get());
+		map.put("page", Arrays.asList(2,3,4,5));	
+		return map;
 		
-		return s.get();
 		
 	}
 	

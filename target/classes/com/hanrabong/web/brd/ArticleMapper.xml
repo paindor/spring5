@@ -17,7 +17,12 @@
 	 </select>
 	
 	<select id="selectAll" resultType="Article">
-	SELECT a.* FROM ARTICLE a;
+		select a.brdnum as brdnum , a.* from(
+			select * 
+			from article
+			order by brdnum desc) A
+		limit 0,5
+		
 	
 	</select>
 	

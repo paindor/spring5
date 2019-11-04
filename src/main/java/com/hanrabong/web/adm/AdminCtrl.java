@@ -37,6 +37,7 @@ public class AdminCtrl {
 		
 	}
 	
+	
 	@PostMapping("/{aid}")
 	public Map<?, ?> access(@PathVariable String aid ,@RequestBody Admin param){
 		printer.accept("access 진입");
