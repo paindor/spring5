@@ -11,12 +11,17 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @MapperScan(basePackages = {"com.hanrabong.web"})
 @ComponentScan(basePackages = {"com.hanrabong.web"})
+//@EnableAspectJAutoProxy
+//@EnableTransactionManagement
 @Import({
 	MyBatisConfig.class, ServletConfig.class
 })
@@ -34,5 +39,10 @@ public class RootConfig {
 		
 	}
 
+	@Bean
+	public DataSourceTransactionManager txManager() {
+		return new DataSourceTransactionManager(dataSource());
+		
+	}
 
 }

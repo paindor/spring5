@@ -8,12 +8,12 @@
 	<select id="selectCustById" resultType="cust" >
 		SELECT CNUM, CID , CPW , CNAME FROM HCUST WHERE CID LIKE #{cid} 
 			AND CPW LIKE #{cpw}
-		
+	
 	</select>
 	<insert id="insertUser" parameterType="cust" >
 	   INSERT INTO HCUST(CNUM , CID, CPW)
 		VALUES( #{cnum} ,#{cid}, #{cpw})
-						
+					
 	</insert>
 
 	<select id="existId" parameterType="String" resultType="int">

@@ -12,5 +12,14 @@
 	<select id="selectAdminByIdpw" parameterType="Admin" resultType="Admin">
 	SELECT A.* FROM HADMIN A WHERE AID = #{aid}
 	</select>
+<!-- 	
+	<select id="selectAdmin">
+		select * from HADMIN 
+		<where>
+			<if test=""></if>
+		</where>
+		
+		
+	</select> -->
 
 </mapper>
