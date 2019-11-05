@@ -16,12 +16,12 @@
 	 
 	 </select>
 	
-	<select id="selectAll" resultType="Article">
-		select a.brdnum as brdnum , a.* from(
+	<select id="selectAll" resultType="Article" parameterType="Proxy">
+		select a.brdnum as BRDNUM , a.* from(
 			select * 
 			from article
-			order by brdnum desc) A
-		limit 0,5
+			order by BRDNUM DESC) A
+		limit #{startRow}, #{pageSize}
 		
 	
 	</select>

@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hanrabong.web.cmm.IConsumer;
 import com.hanrabong.web.cmm.IFunction;
+import com.hanrabong.web.cmm.IPredicate;
 import com.hanrabong.web.cmm.ISupply;
+import com.hanrabong.web.pxy.Proxy;
+import com.hanrabong.web.pxy.ProxyMap;
 import com.hanrabong.web.utl.Printer;
 
 @RestController
@@ -29,11 +32,11 @@ import com.hanrabong.web.utl.Printer;
 public class ArticleCtrl {
 	private static final Logger logger = LoggerFactory.getLogger(ArticleCtrl.class);
 	@Autowired Printer printer;
-	@Autowired Map<String, Object>map;
 	@Autowired Article article;
 	@Autowired ArticleMapper articleMapper;
 	@Autowired List<Article>list;
-	
+	@Autowired Proxy pxy;
+	@Autowired ProxyMap map;
 	
 	
 
@@ -46,14 +49,13 @@ public class ArticleCtrl {
 				
 		c.accept(param);
 		
-		map.clear();
-		map.put("msg", "success");
+		
 		ISupply<String> s =()-> articleMapper.selectCount();
+		map.accept(Arrays.asList("msg", "count"),
+				Arrays.asList("success", s.get()));
 		
-		map.put("count", s.get());
 		
-		
-		return map;
+		return map.get();
 		
 	}
 	
@@ -63,28 +65,30 @@ public class ArticleCtrl {
 		
 		ISupply<String> s =()-> articleMapper.selectCount();
 		
+		map.accept(Arrays.asList("count"), Arrays.asList(s.get()));
 		
-		map.clear();
-		map.put("count", s.get());
-		 
+	
 			
 		
-		return map;
+		return map.get();
 		
 	}
 	
 	
 	
-	@GetMapping("/page/{pageNo}")
-	public Map<?,?> list(@PathVariable String pageNo){
+	@GetMapping("/page/{pageNo}/size/{pageSize}")
+	public Map<?,?> list(@PathVariable String pageNo , @PathVariable String pageSize){
 		
-		
-		ISupply<List<Article>> s =()-> articleMapper.selectAll();
+		printer.accept("in the list");
+		pxy.setPageNum(pxy.parseInt(pageNo));
+		pxy.setPageSize(pxy.parseInt(pageSize));
+		pxy.setStartRow(0);
+		pxy.paging();
+		ISupply<List<Article>> s =()-> articleMapper.selectAll(pxy);
 		printer.accept("목록\n" + s.get());
-		map.clear();
-		map.put("article", s.get());
-		map.put("page", Arrays.asList(2,3,4,5));	
-		return map;
+		map.accept(Arrays.asList("articles", "pages"),
+				Arrays.asList(s.get(), Arrays.asList(1,2,3,4,5)));
+		return map.get();
 		
 		
 	}
@@ -97,9 +101,9 @@ public class ArticleCtrl {
 		c.accept(param);
 		printer.accept(param.getBrdNum());
 		printer.accept(param.getContent());
-		map.clear();
-		map.put("msg", "success");	
-		return map;
+	/*	map.clear();
+		map.put("msg", "success");	*/
+		return null;
 		
 		
 	}
@@ -112,10 +116,10 @@ public class ArticleCtrl {
 		
 		c.accept(param);
 		
-		map.clear();
-		map.put("msg","success" );
+		//map.clear();
+		//map.put("msg","success" );
 		
-		return map;
+		return null;
 		
 		
 	}
