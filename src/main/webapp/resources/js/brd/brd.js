@@ -65,6 +65,8 @@ brd = (()=>{
 		$('#recent_updates .media').remove()
 		$('#recent_updates .d-block').remove()
 		$('#suggestions').remove()
+		$('#recent_updates .container').remove()
+		
 		$.getJSON(_+'/articles/page/' + x.page +'/size/'+x.size, d=>{
 			
 		
@@ -106,15 +108,35 @@ brd = (()=>{
 				'  </select>'+
 				'</form>').prependTo('#recent_updates div.container')
 			$('#paging_form input[class="form-control mr-sm-2"]').css({width:'80%'})
-			$.each([{sub:'5개보기'},{sub:'10개보기'},{sub:'15개보기'}],(i,j)=>{
-				$('<option value='+j.sub+'>'+j.sub+'</option>')
+			$.each([{sub:'5개보기' ,val:'5'},{sub:'10개보기',val:'10'},{sub:'15개보기',val:'15'}],(i,j)=>{
+				$('<option value='+j.val+'>'+j.sub+'</option>')
 				.appendTo('#paging_form select')
 			})
+			$('#paging_form option[value="'+d.pxy.pageSize+'"]').attr('selected', true)
+			$('#paging_form').change(()=>{
+				alert('선택한 보기: '+$('#paging_form option:selected').val())
+				recent_updates({page: '1', size: $('#paging_form option:selected').val()})
+			})
+			
+			if(d.pxy.existPrev){
+				$('<li class="page-item"><a class="page-link" href="#">'+"이전"+'</a></li>')
+				.appendTo('#pagination')
+			}
+			
 					$.each(d.pages, (i, j)=>{
-					$('<li class="page-item"><a class="page-link" href="#">'+(i+1)+'</a></li>')
+					$('<li name="'+(i+1)+'" class="page-item"><a class="page-link" href="#">'+(i+1)+'</a></li>')
 					.appendTo('#pagination')
+					.click(function(){
+						recent_updates({page:j , size : '5'})
+					})
 					
 				})
+			
+				if(d.pxy.existNext){
+					$('<li class="page-item"><a class="page-link" href="#">'+"다음"+'</a></li>')
+					.appendTo('#pagination')
+				}	
+		
 				
 				//$( '<li class="page-item"><a class="page-link" href="#">Previous</a></li>')
 		})
@@ -263,7 +285,7 @@ brd = (()=>{
 					alert(d.msg)
 					
 					$('#recent_updates').empty()
-					recent_updates()
+					recent_updates({page:'1' , size : '5'})
 					
 				},
 				error : e =>{

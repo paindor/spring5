@@ -3,6 +3,7 @@ package com.hanrabong.web.pxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jsoup.Connection;
@@ -25,6 +26,7 @@ public class Proxy {
 	private int pageNum, pageSize, startRow, endRow;
 	private String search;
 	private final int BLOCK_SIZE = 5;
+	private boolean existPrv ,  next;
 	@Autowired Printer p;
 	@Autowired ArticleMapper articleMapper;
 	
@@ -49,11 +51,12 @@ public class Proxy {
 					(pageCount/BLOCK_SIZE)+1;
 		
 		
-		int startPage = (blockNum *BLOCK_SIZE)-1;
-		int endPage = (blockNum== blockCount)? 
-				blockCount-1 :startPage + BLOCK_SIZE; 
-		boolean exsitPrev = false;
-		boolean exsitNext = false;
+		int startPage = (blockNum *BLOCK_SIZE)+1;
+		int endPage = (blockNum +1 != blockCount)? 
+				startPage+(BLOCK_SIZE -1) :pageCount; 
+		boolean exsitPrev = (blockNum != 0 );//|| );
+		boolean exsitNext = (blockNum+1) != blockCount;
+		
 		
 		
 		
@@ -86,6 +89,13 @@ public class Proxy {
 		return proxyList;
 	}
 
+	public int random(int start , int end) {
+		
+		BiFunction<Integer, Integer, Integer> f = (i,j) -> (int)(Math.random() *(j-i)) +i; 		
+	
+		return f.apply(start, end);
+		
+	}
 	
 
 }

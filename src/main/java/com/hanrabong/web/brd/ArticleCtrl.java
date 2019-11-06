@@ -86,8 +86,8 @@ public class ArticleCtrl {
 		pxy.paging();
 		ISupply<List<Article>> s =()-> articleMapper.selectAll(pxy);
 		printer.accept("목록\n" + s.get());
-		map.accept(Arrays.asList("articles", "pages"),
-				Arrays.asList(s.get(), Arrays.asList(1,2,3,4,5)));
+		map.accept(Arrays.asList("articles", "pages" ,"pxy"),
+				Arrays.asList(s.get(), Arrays.asList(1,2,3,4,5),pxy));
 		return map.get();
 		
 		
