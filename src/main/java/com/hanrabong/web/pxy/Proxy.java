@@ -32,9 +32,10 @@ public class Proxy {
 	private String search;
 	private final int BLOCK_SIZE = 5;
 	private boolean existPrv ,  next;
-	
+	private String sibl ;
 	@Autowired Printer p;
 	@Autowired ArticleMapper articleMapper;
+	
 	
 	@SuppressWarnings("unused")
 	public void paging() {
