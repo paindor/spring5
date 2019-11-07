@@ -1,6 +1,9 @@
 package com.hanrabong.web.pxy;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -23,10 +26,13 @@ import lombok.Data;
 
 @Component @Data @Lazy
 public class Proxy {
-	private int pageNum, pageSize, startRow, endRow;
+	private int startRow, endRow , totalCount,
+				pageCount, pageNum, pageSize, startPage, endPage, 
+				nextBlock , prevBlock ,blockCount, blockNum	;
 	private String search;
 	private final int BLOCK_SIZE = 5;
 	private boolean existPrv ,  next;
+	
 	@Autowired Printer p;
 	@Autowired ArticleMapper articleMapper;
 	
@@ -56,7 +62,16 @@ public class Proxy {
 				startPage+(BLOCK_SIZE -1) :pageCount; 
 		boolean exsitPrev = (blockNum != 0 );//|| );
 		boolean exsitNext = (blockNum+1) != blockCount;
+	
+		nextBlock = startPage +BLOCK_SIZE;
+		prevBlock = startPage -BLOCK_SIZE;
 		
+		
+		
+		
+		/*pages = (endRow%endPage==0)? 
+				for(int i = 0 ;i < pageCount; i++)temp.add(blockNum*BLOCK_SIZE +1) :
+					for(int i = 0; i< endRow%endPage; i++)Arrays.asList(blockNum*BLOCK_SIZE+1) ;*/
 		
 		
 		

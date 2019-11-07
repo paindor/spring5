@@ -68,7 +68,7 @@ brd = (()=>{
 		$('#recent_updates .container').remove()
 		
 		$.getJSON(_+'/articles/page/' + x.page +'/size/'+x.size, d=>{
-			
+			let pxy = d.pxy
 		
 				$.each(d.articles, (i,j)=>{
 					$('<div class="media text-muted pt-3">'+
@@ -112,29 +112,54 @@ brd = (()=>{
 				$('<option value='+j.val+'>'+j.sub+'</option>')
 				.appendTo('#paging_form select')
 			})
-			$('#paging_form option[value="'+d.pxy.pageSize+'"]').attr('selected', true)
+			$('#paging_form option[value="'+pxy.pageSize+'"]').attr('selected', true)
 			$('#paging_form').change(()=>{
 				alert('선택한 보기: '+$('#paging_form option:selected').val())
 				recent_updates({page: '1', size: $('#paging_form option:selected').val()})
 			})
 			
-			if(d.pxy.existPrev){
+			if(pxy.existPrev){
 				$('<li class="page-item"><a class="page-link" href="#">'+"이전"+'</a></li>')
 				.appendTo('#pagination')
+				.click(e=>{
+					e.preventDefault()
+					recent_updates({page:pxy.prevBlock, size:pxy.pageSize})
+				})
+				
 			}
+				for(let i = pxy.startPage ; i <= pxy.endPage ; i++) {
+					if(pxy.pageNum == i){
+						$('<li name="" class="page-item"><a class="page-link" href="#">'+i+'</a></li>')
+						.appendTo('#pagination')
+						.addClass('active')
+						
+					}else{
+						$('<li name="" class="page-item"><a class="page-link" href="#">'+i+'</a></li>')
+						.appendTo('#pagination')
+						.click(function(){
+							alert('페이지번호:' +$(this).children('.page-link').text())
+							recent_updates({page:$(this).children('.page-link').text(), size :pxy.pageSize})
+						})
+					}
+					
+				}
 			
-					$.each(d.pages, (i, j)=>{
+				/*	$.each(d.pages, (i, j)=>{
 					$('<li name="'+(i+1)+'" class="page-item"><a class="page-link" href="#">'+(i+1)+'</a></li>')
 					.appendTo('#pagination')
 					.click(function(){
 						recent_updates({page:j , size : '5'})
 					})
 					
-				})
+				})*/
 			
-				if(d.pxy.existNext){
+				if(pxy.existNext){
 					$('<li class="page-item"><a class="page-link" href="#">'+"다음"+'</a></li>')
 					.appendTo('#pagination')
+					.click(e=>{
+						e.preventDefault()
+						recent_updates({page:pxy.nextBlock, size:pxy.pageSize})
+					})
 				}	
 		
 				
