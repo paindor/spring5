@@ -18,7 +18,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 		<servlet-version>2.5</servlet-version>
 		<jsp-version>2.1</jsp-version>
 		<jstl-version>1.2</jstl-version>
-		<spring-web-version>4.3.25.RELEASE</spring-web-version>
+		<spring-web-version>6.0.0</spring-web-version>
 		<spring-oxm-version>4.3.18.RELEASE</spring-oxm-version>
 		<spring-core-version>4.3.25.RELEASE</spring-core-version>
 		<spring-context-support-version>4.3.25.RELEASE</spring-context-support-version>
